@@ -135,6 +135,31 @@ async def test_train(component_builder, tmpdir):
     assert loaded.parse("Hello today is Monday, again!") is not None
 
 
+async def test_elmo_train(component_builder, tmpdir):
+    pipeline = [
+        {"name": "WhitespaceTokenizer"},
+        {"name": "ElmoFeaturizer"},
+        {"name": "CountVectorsFeaturizer"},
+        {"name": "EmbeddingIntentClassifier"},
+    ]
+
+    _config = RasaNLUModelConfig({"pipeline": pipeline, "language": "en"})
+
+    (trained, _, persisted_path) = await train(
+        _config,
+        path=tmpdir.strpath,
+        data=DEFAULT_DATA_PATH,
+        component_builder=component_builder,
+    )
+
+    assert trained.pipeline
+
+    loaded = Interpreter.load(persisted_path, component_builder)
+    assert loaded.pipeline
+    assert loaded.parse("hello") is not None
+    assert loaded.parse("Hello today is Monday, again!") is not None
+
+
 async def test_raise_error_on_incorrect_pipeline(component_builder, tmpdir):
     from rasa.nlu import train
 

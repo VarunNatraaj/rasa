@@ -26,6 +26,7 @@ from rasa.nlu.featurizers.dense_featurizer.mitie_featurizer import MitieFeaturiz
 from rasa.nlu.featurizers.sparse_featurizer.regex_featurizer import RegexFeaturizer
 from rasa.nlu.featurizers.dense_featurizer.spacy_featurizer import SpacyFeaturizer
 from rasa.nlu.featurizers.dense_featurizer.convert_featurizer import ConveRTFeaturizer
+from rasa.nlu.featurizers.dense_featurizer.elmo_featurizer import ElmoFeaturizer
 from rasa.nlu.model import Metadata
 from rasa.nlu.tokenizers.jieba_tokenizer import JiebaTokenizer
 from rasa.nlu.tokenizers.mitie_tokenizer import MitieTokenizer
@@ -68,6 +69,7 @@ component_classes = [
     RegexFeaturizer,
     CountVectorsFeaturizer,
     ConveRTFeaturizer,
+    ElmoFeaturizer,
     # classifiers
     SklearnIntentClassifier,
     MitieIntentClassifier,
@@ -137,6 +139,11 @@ registered_pipeline_templates = {
         {"name": "ConveRTFeaturizer"},
         {"name": "EmbeddingIntentClassifier"},
     ],
+    "pretrained_embeddings_elmo": [
+        {"name": "WhitespaceTokenizer"},
+        {"name": "ElmoFeaturizer"},
+        {"name": "EmbeddingIntentClassifier"},
+    ]
 }
 
 
